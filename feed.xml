@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dennis Hedegaard</title>
+    <description>Rambling thoughts of a software developer.
+</description>
+    <link>https://dhedegaard.dk/</link>
+    <atom:link href="https://dhedegaard.dk/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 19 Aug 2015 16:33:42 +0000</pubDate>
+    <lastBuildDate>Wed, 19 Aug 2015 16:33:42 +0000</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>The awesomeness of Docker</title>
+        <description>&lt;p&gt;So I’ve been messing around with &lt;a href=&quot;https://docker.com/&quot;&gt;Docker&lt;/a&gt; for a while, it’s a technology for containerizing applications. The basic idea is to use the exact same versions of all the dependencies of your application, and to use the same environment for development, staging, testing and production.&lt;/p&gt;
+
+&lt;p&gt;If you compare it to a virtual machine, the comparison is something like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A VM runs a kernels and everything around it. A container runs on the host kernel, separated from the other processed using cgroups and namespaces currently using LXC.&lt;/li&gt;
+  &lt;li&gt;A VM usually takes seconds to minutes to boot. A container starts in a matter of milliseconds.&lt;/li&gt;
+  &lt;li&gt;A VM is usually a bother to move between different environments. A docker image can be started as a container as long as there’s a docker daemon running on the system.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A container in essence is only supposed to run one process (on pid 1), so for a normal web tier application I usually have around 3 or 4 containers. An example of a docker-compose.yml can be found &lt;a href=&quot;https://github.com/dhedegaard/webchat/blob/master/docker-compose.yml&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A container running my application through uwsgi or whatever application server you like.&lt;/li&gt;
+  &lt;li&gt;A container running postgres or some other database backend.&lt;/li&gt;
+  &lt;li&gt;A container running postfix, if sending mails is required.&lt;/li&gt;
+  &lt;li&gt;In the future, a container running redis for faster django cache.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;My basic workflow goes something like it.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Build a docker-compose file, for quickly starting and linking the various containers in my application to each other.&lt;/li&gt;
+  &lt;li&gt;Develop using said containers, commit and push those changes to Github and/or BitBucket.&lt;/li&gt;
+  &lt;li&gt;Allow for travis CI or Jenkins to run the tests on the project.&lt;/li&gt;
+  &lt;li&gt;If the tests pass, push the docker images to my production machine and spin up the containers there.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;What I currently lack:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Letting my CI-component build a docker image, run tests on it, and push it for production use. So that I use the same image that passed testing for deployment in production.&lt;/li&gt;
+  &lt;li&gt;Docker Compose support for windows, even though I usually don’t develop on windows I see a lot of missed potential.&lt;/li&gt;
+  &lt;li&gt;Building and running tests using cloud CI, I’ve gotten it to work in Jenkins using a docker container running in privileged mode.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I picked up &lt;a href=&quot;http://www.dockerbook.com/&quot;&gt;The Docker Book&lt;/a&gt; to try and get the bigger picture, for now I switch between reading a chapter or two in the book and trying to port old projects to running on docker.&lt;/p&gt;
+
+&lt;p&gt;Development on Docker is still going along rather quickly, especially in regards to managing large amounts of container, across multiple docker hosts using Docker Compose and Docker Machine. It’ll be exciting to see how the workflow ends up in regards to spinning up containers in the cloud.&lt;/p&gt;
+
+&lt;p&gt;For instance, this blog entry was made by using the &lt;a href=&quot;https://hub.docker.com/r/jekyll/jekyll/&quot;&gt;jekyll/jekyll&lt;/a&gt; docker image.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+        <link>https://dhedegaard.dk/2015/08/18/the_awesomeness_of_docker.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/2015/08/18/the_awesomeness_of_docker.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Finding duplicate files with Go</title>
+        <description>&lt;p&gt;For some time now, I&#39;ve been messing around with the Go programming language. I like the idea of a systems language with a modern take on the standard library (like build in support for JSON, HTTP calls and built in vectors called slices), concurrency, easy use of 3rd party dependencies and fast, clean code.&lt;/p&gt;
+&lt;p&gt;As a fun experiment of how easy it is to traverse a filesystem, hashing files, checking sizes on files, parsing arguments among others I&#39;ve implemented a small and simple tool for finding duplicate files in a list of directories (supplied as arguments to the application).&lt;/p&gt;
+&lt;p&gt;It goes something like this:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Gather all filenames and sizes in a map, where the key is the size of the files and the value is a slice of filenames as strings.&lt;/li&gt;
+&lt;li&gt;For all the sizes with multiple filenames, hash up to the first 1024 bytes of the files and add to a similar map.&lt;/li&gt;
+&lt;li&gt;For all hashes with multiple filenames, print them as duplicates and let the user choose what to do.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The code (in the newest version) can be found here: &lt;a href=&quot;https://bitbucket.org/dennishedegaard/duplifinder/src/master/duplifinder.go&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/dennishedegaard/duplifinder/src/master/duplifinder.go&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In my daytime job I usually spend my time programming python. Python is a nice language, but no language is perfect. It is extremely nice for writing fast and working code, making very readable code and in general doing things at a higher level of abstraction.Go on the other hand seems to have a much larger emphasize on clean code, being nearer the metal and having more control.&lt;/p&gt;
+&lt;p&gt;Examples of the difference is clear when building Go code, it will not run if you have a variable declared that is not used somewhere. Same goes for an import not being used or types being wrong. Python on the other hand will run pretty much anything and stops only at the first bad line of code, this makes it hard to validate if there&#39;s a syntax error in the code. Python has 3rd party tools for checking these things (pyflakes, pylint, pep8 etc), but they do not catch nearly as much as the build in validator in Go.&lt;/p&gt;
+&lt;p&gt;Go is a statically typed language, it however infers types like many other modern languages, python is dynamically typed and it can be a challenge to figure out what a variable is pointing to in a large codebase.&lt;/p&gt;
+&lt;p&gt;Another difference is the fact that Go has no exceptions (it has panics but they are used differently, more like serious crashes), instead most methods that can fail return 2 results (like when you return a tuple in python), it returns the result, and an error. If an error occured the result is usually nil while the error is an error-object and vice versa.&lt;/p&gt;
+&lt;p&gt;When you write a Go program you usually run it by calling &quot;go run &amp;lt;file&amp;gt;&quot;, this will build and run the program. The you&#39;re ready to deploy you can simply call &quot;go build &amp;lt;file&amp;gt;&quot; and a binary is built. I have tried moving binaries between systems without a Go runtime, and they still work.&lt;/p&gt;
+&lt;p&gt;I will probably keep messing around with Go, especially since it&#39;s so different from python, I&#39;ve always had a weak spot for system languages like C and C++ but hated the somewhat small standard libraries and APIs and the constant checking for bad pointers and memory leaks with valgrind every now and then. Go seems to have the perfect blend of simplicity, power and expressiveness without the history that shaped older languages.&lt;/p&gt;
+&lt;p&gt;Go also features API for doing web development, for now I&#39;ve done most of that using the web.go framework, it seems a bit far away from my usual framework (Django).&lt;/p&gt;
+&lt;p&gt;I will probably keep on coding Go for various projects in the future, it&#39;s a nice language with some new and interesting ideas. I tried rust as well, but the unstable API and lack of documentation is still keeping me away for now.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 13 Aug 2014 21:32:38 +0200</pubDate>
+        <link>https://dhedegaard.dk/languages/go/2014/08/13/finding-duplicate-files-with-go.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/languages/go/2014/08/13/finding-duplicate-files-with-go.html</guid>
+        
+        <category>Python</category>
+        
+        <category>go</category>
+        
+        <category>programming</category>
+        
+        
+        <category>languages</category>
+        
+        <category>go</category>
+        
+      </item>
+    
+      <item>
+        <title>Django, Memcached and the EZTV twitter feed</title>
+        <description>&lt;p&gt;Back in the days I wrote a HTML-page that used javascript, AJAX and jsonp to parse the eztv-it twitter timeline to something useful (can be found here:&lt;a href=&quot;http://eztv-mirror.appspot.com/&quot; target=&quot;_blank&quot;&gt; http://eztv-mirror.appspot.com/&lt;/a&gt;), unfortunately it does not work anymore.&lt;/p&gt;
+&lt;p&gt;As a fun project I considered implementing a replacement in Django, using the django caching framework and some &quot;nice to know&quot; libraries (eg &lt;a title=&quot;python-requests&quot; href=&quot;http://docs.python-requests.org/en/latest/&quot;&gt;requests&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;The main problem with the old version is that it does not receive a response from the twitter REST api. When you hit the URL directly you however, get a response. I suspect the problem has to do with the callback used to wrap the content from the server side not working correctly (not wrapping the json response in the callback function or similar).&lt;/p&gt;
+&lt;p&gt;Using the python requests library I was able to get the data I needed, the data can be found on the following URL:&lt;br /&gt;
+&lt;a href=&quot;https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eztv_it&quot;&gt;https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eztv_it&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Since this project is about farmiliarising myself with a lot of the &quot;nice to know&quot; libraries commonly used, the list is the following (from requirements.txt):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Django==1.5.1&lt;/strong&gt; - Obviously :)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;python-dateutil==2.1&lt;/strong&gt; - Dateutil has a nice parser method, that attempts to parse the date using common formats, this way I most likely won&#39;t notice if Twitter changes their datetime format.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pytz==2013b&lt;/strong&gt; - required by python-dateutil, but Django uses it internally as well (if available).&lt;/li&gt;
+&lt;li&gt;&lt;em id=&quot;__mceDel&quot;&gt;&lt;strong&gt;requests==1.2.0&lt;/strong&gt; - used to get the data from Twitter, it&#39;s a wrapper around the urllib/urlib2/httplib mess.&lt;br /&gt;
+&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;em id=&quot;__mceDel&quot;&gt;python-memcached==1.51&lt;/em&gt;&lt;/strong&gt;&lt;em id=&quot;__mceDel&quot;&gt; - One of the two popular memcached binding for python.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em id=&quot;__mceDel&quot;&gt;&lt;/em&gt;&lt;strong&gt;&lt;em id=&quot;__mceDel&quot; style=&quot;line-height: 1.714285714; font-size: 1rem;&quot;&gt;django-memcached==0.1.2&lt;/em&gt;&lt;/strong&gt;&lt;em id=&quot;__mceDel&quot; style=&quot;line-height: 1.714285714; font-size: 1rem;&quot;&gt; - Django bindings to the python memcached module (above).&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Most of the above is convenience, to reduce the number of lines required, it makes the code easier to read and reduces the chance of bugs.&lt;/p&gt;
+&lt;p&gt;In django you define the caching used in the settings module using something similar to (example is local memcached, over TCP):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;CACHES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&amp;#39;BACKEND&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;django.core.cache.backends.memcached.MemcachedCache&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&amp;#39;LOCATION&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;127.0.0.1:11211&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;span style=&quot;line-height: 1.714285714; font-size: 1rem;&quot;&gt;The backend can be switched to something else that implements the django cache interface, without much notice. You can also use multiple caching backends simultaneous.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The django caching framework is extremely easy to use, here&#39;s my take on it (from app/eztv.py):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.core.cache&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Key of the cache.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;eztv_cache&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Timeout of the cache (in seconds)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_TIMEOUT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yield_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_TIMEOUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# If cache is empty or outdated, update it.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As can be seen, the django cache framework is a simple import (after defining the backend in settings) and works along the lines of a key/value store, where the elements  can have a timeout.&lt;/p&gt;
+&lt;p&gt;The backend can even be memory-only (normally only for development) or simply use files (as keys) on the filesystem.&lt;/p&gt;
+&lt;p&gt;One of the caveats to the method I use is of course the problem when the cache is outdated and needs to be refreshed, since this takes several seconds. One way to solve this is by using a cronjob for updating the cache. This however brings more complexity and more dependencies to the system as a whole.&lt;/p&gt;
+&lt;p&gt;It coult be interesting to try and send 100 requests quickly after the cache in outdated or missing. I do not know if this is a problematic case that django solves for me by keeping track of get/set calls to the cache per request, or if it&#39;s a problem I have to solve myself. It is however easy to prove.&lt;/p&gt;
+&lt;p&gt;Git repository can be found here: &lt;a href=&quot;https://bitbucket.org/dennishedegaard/eztv/&quot;&gt;https://bitbucket.org/dennishedegaard/eztv/&lt;/a&gt;&lt;br /&gt;
+A running site can be found here: &lt;a href=&quot;http://ez.dhedegaard.dk/&quot;&gt;http://ez.dhedegaard.dk/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 May 2013 02:11:59 +0200</pubDate>
+        <link>https://dhedegaard.dk/python/2013/05/20/django-memcached-and-the-eztv-twitter-feed.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/python/2013/05/20/django-memcached-and-the-eztv-twitter-feed.html</guid>
+        
+        <category>Python</category>
+        
+        <category>django</category>
+        
+        <category>memcached</category>
+        
+        <category>eztv</category>
+        
+        <category>twitter</category>
+        
+        <category>cache</category>
+        
+        
+        <category>python</category>
+        
+      </item>
+    
+      <item>
+        <title>Raspberry Pi</title>
+        <description>&lt;p&gt;I finally got my Raspberry Pi in the mail. It&#39;s a small, extremely cheap ARM-based computer, I see it as a fun gadget to mess around with. The official operation system for one of these is a modified version of the Debian GNU/Linux operating system called Raspbian, this means the software is something I already know very well.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a pic of the system up and running:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;//i.imgur.com/TDixa71.jpg&quot;&gt;
+&lt;img src=&quot;//i.imgur.com/TDixa71.jpg&quot; width=&quot;600&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And here&#39;s a screenshot of the desktop running, Raspbian uses a slightly modified LXDE desktop&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;//i.imgur.com/D2eLI1H.png&quot;&gt;
+&lt;img alt=&quot;raspberrypi&quot; src=&quot;//i.imgur.com/D2eLI1H.png&quot; width=&quot;600&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;line-height: 1.714285714; font-size: 1rem;&quot;&gt;One of the immediate annoyances is the need for 700 mA at 5 Volts. The maximum amount of mA from USB2 is 500 mA at 5 Volts. The 700 mA at 5 Volts means the top effect is around 3,5 watts. When the system is idle it seems to use around 2 watts. This is very impressive for a computer running a modern operation system.&lt;/span&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 02 Apr 2013 17:54:42 +0200</pubDate>
+        <link>https://dhedegaard.dk/linux/2013/04/02/raspberry-pi.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/linux/2013/04/02/raspberry-pi.html</guid>
+        
+        <category>Linux</category>
+        
+        <category>raspberry pi</category>
+        
+        <category>raspbian</category>
+        
+        <category>arm</category>
+        
+        <category>lxde</category>
+        
+        
+        <category>linux</category>
+        
+      </item>
+    
+      <item>
+        <title>zram and the memory-problem with virtualization</title>
+        <description>&lt;p&gt;I like to run a lot of VM&#39;s, whenever I start work on a non-trivial project I usually make a VM to isolate the system a bit. This means I run a lot of VMs from time to time.&lt;/p&gt;
+&lt;p&gt;One of the problems with virtualization is the increase in memory usage, one of the ways I&#39;ve tried to counter this is by using KSM (Kernel SamePage Merging) which merges pages in memory containing the same data. My server has 8 GB of memory, this saves me about 1 GB in average.&lt;/p&gt;
+&lt;p&gt;A friend of mine keeps talking about how awesome zram is so I gave it a shot. What it does is allocate memory to a compressed block device, this block device can then be used for swap. Swapping from/to compressed memory is super-fast compared to traditional swapping. One of the problems with zram is an obvious processing-overhead caused by the constant compression/decompression of pages to/from the swap.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a short explanation of the things I did to enable zram.&lt;/p&gt;
+&lt;h2&gt;Upgrading Debian&lt;/h2&gt;
+&lt;p&gt;I like to run stable software (especially for the system my hypervisor(KVM) lives on), and it&#39;s hard to get more stable than a Debian stable (CentOS anyone?), this means running a 2.6.32 kernel (in the case of squeeze/6.0). Since wheezy (or 7.0) is currently in RC1 I decided to upgrade. Needless to say this went smooth. I now run a 3.2 kernel.&lt;/p&gt;
+&lt;h2&gt;Modprobing the module&lt;/h2&gt;
+&lt;p&gt;For debian all I need to do to modprobe at boot is to add &quot;zram&quot; to /etc/modules. One of the things you&#39;d want to give the module as parameter when probing is &lt;strong&gt;zram_num_devices&lt;/strong&gt;, this tells zram how many devices you want. Usually you want as many zram-devices as the number of CPUs on the system.&lt;/p&gt;
+&lt;p&gt;On debian this is done by making a file in &lt;strong&gt;/etc/modprobe.d&lt;/strong&gt; and entering something like (in my case 2 cores):&lt;/p&gt;
+&lt;pre&gt;options zram zram_num_devices=2&lt;/pre&gt;
+&lt;h2&gt;Initializing the SWAP on boot&lt;/h2&gt;
+&lt;p&gt;Since the content of DRAM (Dynamic RAM) is lost when the module are unpowered you need to make new swap every time you boot. There are lots of nice init-scripts out there to do this for you. I like to do it myself, my solution (albeit primitive) is to put the details in &lt;strong&gt;/etc/rc.local&lt;/strong&gt;. First I tell the zram-devices how many bytes I want in each, then I make the swap and then i mount the swap. Details below:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# zram swap&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# expects zram modprobed with zram_num_devices=2&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# allocates 4gb mem to zram, in 2 separate swap partitions.&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2147483648&lt;/span&gt; &amp;gt; /sys/block/zram0/disksize
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2147483648&lt;/span&gt; &amp;gt; /sys/block/zram1/disksize
+mkswap /dev/zram0
+mkswap /dev/zram1
+swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram0
+swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The reason for using 4gb of my memory as zram is because my machine has a total of 8 gb of memory. Some scripts use 100% of the memory as zram.&lt;/p&gt;
+&lt;h2&gt;Some statistics&lt;/h2&gt;
+&lt;p&gt;I&#39;ve located a script on the old zram site, that prints some statistics about the zram&#39;s at runtime, it can be found here:&lt;/p&gt;
+&lt;p&gt;&lt;a title=&quot;http://compcache.googlecode.com/git/sub-projects/scripts/zram_stats&quot; href=&quot;http://compcache.googlecode.com/git/sub-projects/scripts/zram_stats&quot; target=&quot;_blank&quot;&gt;http://compcache.googlecode.com/git/sub-projects/scripts/zram_stats&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As always YMMW and I&#39;ll be tweaking my setup over the course of time as I run into new bottlenecks.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 22 Feb 2013 22:13:53 +0100</pubDate>
+        <link>https://dhedegaard.dk/uncategorized/linux/debian/2013/02/22/zram-and-the-memory-problem-with-virtualization.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/uncategorized/linux/debian/2013/02/22/zram-and-the-memory-problem-with-virtualization.html</guid>
+        
+        <category>kvm</category>
+        
+        <category>zram</category>
+        
+        <category>ksm</category>
+        
+        <category>memory</category>
+        
+        <category>ram</category>
+        
+        <category>swap</category>
+        
+        <category>zram_num_devices</category>
+        
+        
+        <category>uncategorized</category>
+        
+        <category>linux</category>
+        
+        <category>debian</category>
+        
+      </item>
+    
+      <item>
+        <title>Making jpg transparent with PIL</title>
+        <description>&lt;p&gt;A fun experiment, how hard is it to convert a jpg (or anyting else) to a transparent png using PIL (Python Imaging Library) ?&lt;/p&gt;
+&lt;p&gt;Not very hard it seems, the source can be found here:&lt;/p&gt;
+&lt;p&gt;&lt;a title=&quot;https://bitbucket.org/dennishedegaard/transparentpng/src/194d8e5f1dad1491259ad697e9085f3726445b9b/transparentpng.py?at=master&quot; href=&quot;https://bitbucket.org/dennishedegaard/transparentpng/src/194d8e5f1dad1491259ad697e9085f3726445b9b/transparentpng.py?at=master&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/dennishedegaard/transparentpng/src/194d8e5f1dad1491259ad697e9085f3726445b9b/transparentpng.py?at=master&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In later commits a webinterface for GAE can be found here: &lt;a title=&quot;http://transparentpng.appspot.com/&quot; href=&quot;http://transparentpng.appspot.com/&quot; target=&quot;_blank&quot;&gt;http://transparentpng.appspot.com/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Feb 2013 22:01:17 +0100</pubDate>
+        <link>https://dhedegaard.dk/python/2013/02/18/making-jpg-transparent-with-pil.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/python/2013/02/18/making-jpg-transparent-with-pil.html</guid>
+        
+        <category>Python</category>
+        
+        <category>PIL</category>
+        
+        <category>png</category>
+        
+        <category>jpeg</category>
+        
+        <category>transparent</category>
+        
+        <category>gae</category>
+        
+        
+        <category>python</category>
+        
+      </item>
+    
+      <item>
+        <title>Long-polling chat application in Django</title>
+        <description>&lt;p&gt;Back when I was a student I messed around with websockets (back then it was grizzly on glassfish). Now adays most of my development is done in python. The nice thing about websockets is that it&#39;s like a TCP-socket where both parties can send data, websockets are like this, but over HTTP. This allows the server to send data to the client without the client being the active party.&lt;/p&gt;
+&lt;p&gt;The basic &quot;usecase&quot; for long-polling is described below.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;span style=&quot;line-height: 14px;&quot;&gt;The client initiates an ajax-request to the server.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;The server check to see if it has something to return, if it has, it returns it and we go back to step 1.&lt;/li&gt;
+&lt;li&gt;If the server had nothing to return, it waits for a period of time (in my case 20 seconds), check now and again if it has something to return. If it finds something, it returns it and we go to step 1.&lt;/li&gt;
+&lt;li&gt;If the 20 seconds pass and the server still does not have anything to send the connection is closed (ie the server returns 200 OK or similar), and the client makes a new connection from step 1.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This method brings a lot of overhead, on the plus side it is supported on all browsers that can make ajax-requests reasonably well.&lt;/p&gt;
+&lt;p&gt;My implementation of long-polling is done in Django, it is focused on keeping the model clean, the javascript tight and the long-polling technique robust. I have tested it on IE 6,7,9 and 10 as well as firefox and chrome.&lt;/p&gt;
+&lt;p&gt;A running version can at the time of writing be found here:&lt;/p&gt;
+&lt;p&gt;&lt;a title=&quot;http://wc.dhedegaard.dk/&quot; href=&quot;http://wc.dhedegaard.dk/&quot; target=&quot;_blank&quot;&gt;http://wc.dhedegaard.dk/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The source can be found here:&lt;/p&gt;
+&lt;p&gt;&lt;a title=&quot;https://bitbucket.org/dennishedegaard/webchat&quot; href=&quot;https://bitbucket.org/dennishedegaard/webchat&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/dennishedegaard/webchat&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I will most likely try to put it up in the cloud (ie GAE, which support Django 1.4 these days), to make sure it stays up.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 15 Feb 2013 20:04:37 +0100</pubDate>
+        <link>https://dhedegaard.dk/python/javascript/2013/02/15/long-polling-chat-application-in-django.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/python/javascript/2013/02/15/long-polling-chat-application-in-django.html</guid>
+        
+        <category>Python</category>
+        
+        <category>javascript</category>
+        
+        <category>django</category>
+        
+        <category>websockets</category>
+        
+        <category>bitbucket</category>
+        
+        <category>webchat</category>
+        
+        
+        <category>python</category>
+        
+        <category>javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>Getting CentOS 6 to play nice with a serial port</title>
+        <description>&lt;p&gt;Serial ports might seem like ancient technology now adays. I virtualize everything on my server, for my server virtualization needs I use KVM together with libvirt. This means I usually use virt-manager for managing my VM&#39;s, this is nice when you have a linux environment on the same LAN as the server. However if you&#39;re doing it over the net it takes a long time to do anything (especially in the VNC-client in virt-manager).&lt;/p&gt;
+&lt;p&gt;Most of my new VM&#39;s these days are CentOS 6 machines, to enable them to send data to tty0 and well as ttyS0 do the following (in /etc/boot/boot):&lt;/p&gt;
+&lt;p&gt;Add the following to make grub pass through to tty0 and ttyS0:&lt;/p&gt;
+&lt;pre&gt;serial --unit=0 --speed=19200
+terminal --timeout=8 console serial&lt;/pre&gt;
+&lt;p&gt;To tell the kernel that it should send the serial port append the following to the kernel parameters:&lt;/p&gt;
+&lt;pre&gt;console=tty0 console=ttyS0,19200n8&lt;/pre&gt;
+&lt;p&gt;In CentOS 6, when the last console statement is to a ttyS, CentOS automatically spawns a getty on the serial port (as explained in /etc/init/serial.conf):&lt;/p&gt;
+&lt;pre&gt;# On boot, a udev helper examines /dev/console. If a serial console is the
+# primary console (last console on the commandline in grub),  the event
+# &#39;fedora.serial-console-available  &#39; is emitted, which
+# triggers this script. It waits for the runlevel to finish, ensures
+# the proper port is in /etc/securetty, and starts the getty.&lt;/pre&gt;
+&lt;p&gt;In Debian I&#39;ve been doing this for years by adding/changing the following in /etc/default/grub (and running update-grub afterwards):&lt;/p&gt;
+&lt;pre&gt;GRUB_TERMINAL=serial
+GRUB_SERIAL_COMMAND=&quot;serial --speed=9600 --unit=0 --word=8 --parity=no --stop=1&quot;
+
+GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet console=tty0 console=ttyS0,9600n8&quot;&lt;/pre&gt;
+&lt;p&gt;And uncommenting ttyS0 in /etc/inittab:&lt;/p&gt;
+&lt;pre&gt;T0:23:respawn:/sbin/getty -L ttyS0 9600 vt100&lt;/pre&gt;
+</description>
+        <pubDate>Mon, 04 Feb 2013 20:28:03 +0100</pubDate>
+        <link>https://dhedegaard.dk/centos/2013/02/04/getting-centos-6-to-play-nice-with-a-serial-port.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/centos/2013/02/04/getting-centos-6-to-play-nice-with-a-serial-port.html</guid>
+        
+        <category>ttyS0</category>
+        
+        <category>centos</category>
+        
+        <category>serial</category>
+        
+        <category>virsh</category>
+        
+        <category>kvm</category>
+        
+        <category>console</category>
+        
+        <category>getty</category>
+        
+        
+        <category>centos</category>
+        
+      </item>
+    
+      <item>
+        <title>Slashdot Quotes database</title>
+        <description>&lt;p&gt;On the &lt;a title=&quot;Slashdot.org&quot; href=&quot;http://slashdot.org&quot; target=&quot;_blank&quot;&gt;Slashdot&lt;/a&gt; website at the bottom there is a quote that changes from time to time (according to my tests, every hour). I&#39;ve collected a database of the quotes and is currently at 2381 entries.&lt;/p&gt;
+&lt;p&gt;I&#39;ve implemented a nice graphical interface to searching the database in Django, the database runs on PostgreSQL.&lt;/p&gt;
+&lt;p&gt;The site can be found here: &lt;a href=&quot;http://sd.dhedegaard.dk/&quot;&gt;http://sd.dhedegaard.dk/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 29 Sep 2012 17:55:51 +0200</pubDate>
+        <link>https://dhedegaard.dk/python/2012/09/29/slashdot-quotes-database.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/python/2012/09/29/slashdot-quotes-database.html</guid>
+        
+        <category>postgresql</category>
+        
+        <category>bootstrap</category>
+        
+        <category>quotes</category>
+        
+        <category>slashdot</category>
+        
+        <category>json</category>
+        
+        <category>rest</category>
+        
+        <category>django</category>
+        
+        <category>postgres</category>
+        
+        
+        <category>python</category>
+        
+      </item>
+    
+      <item>
+        <title>Game of Life</title>
+        <description>&lt;p&gt;I&#39;ve spent the day implementing &lt;a title=&quot;Wikipedia - Game of Life&quot; href=&quot;http://en.wikipedia.org/wiki/Conway&#39;s_Game_of_Life&quot; target=&quot;_blank&quot;&gt;Conway&#39;s Game of Life&lt;/a&gt; in javascript and HTML5 using the Canvas element.&lt;/p&gt;
+&lt;p&gt;Check it out &lt;a title=&quot;Game of Life&quot; href=&quot;http://p.dhedegaard.dk/gameoflife&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It&#39;s been tested on the following browsers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Google Chrome&lt;/li&gt;
+&lt;li&gt;Firefox&lt;/li&gt;
+&lt;li&gt;Internet Explorer 9&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&#39;ve implemented different interesting patterns as well as a &quot;random&quot; feature. Suggestions and bugfixes are welcome.&lt;/p&gt;
+&lt;p&gt;Feel free to browse the source: &lt;a href=&quot;https://bitbucket.org/dennishedegaard/gameoflife.js&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/dennishedegaard/gameoflife.js&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You can try it out here: &lt;a href=&quot;http://p.dhedegaard.dk/gameoflife&quot; target=&quot;_blank&quot;&gt;http://p.dhedegaard.dk/gameoflife&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 29 Sep 2012 17:46:26 +0200</pubDate>
+        <link>https://dhedegaard.dk/languages/javascript/2012/09/29/game-of-life.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/languages/javascript/2012/09/29/game-of-life.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>html5</category>
+        
+        <category>game of life</category>
+        
+        <category>conway</category>
+        
+        <category>glider</category>
+        
+        <category>canvas</category>
+        
+        <category>simulation.</category>
+        
+        
+        <category>languages</category>
+        
+        <category>javascript</category>
+        
+      </item>
+    
+  </channel>
+</rss>
