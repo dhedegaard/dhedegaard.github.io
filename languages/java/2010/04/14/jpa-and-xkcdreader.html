@@ -71,23 +71,40 @@
 <p>For the backend I chose SQLite, since it's embedded, it uses SQL, it's rather light, I do alot of my other programming with it, and it's not particular bound to any platform. The SQLite JDBC driver I use is the one found here.</p>
 <p>Here's the persistence.xml I made in the short timeframe:</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="lineno"> 1</span> <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="lineno"> 2</span> <span class="nt">&lt;persistence</span> <span class="na">xmlns=</span><span class="s">&quot;http://java.sun.com/xml/ns/persistence&quot;</span>
-<span class="lineno"> 3</span>  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="lineno"> 4</span>  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://java.sun.com/xml/ns/persistence</span>
-<span class="lineno"> 5</span> <span class="s"> http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd&quot;</span>
-<span class="lineno"> 6</span>  <span class="na">version=</span><span class="s">&quot;2.0&quot;</span><span class="nt">&gt;</span>
-<span class="lineno"> 7</span> 
-<span class="lineno"> 8</span>  <span class="nt">&lt;persistence-unit</span> <span class="na">name=</span><span class="s">&quot;Comics&quot;</span> <span class="na">transaction-type=</span><span class="s">&quot;RESOURCE_LOCAL&quot;</span><span class="nt">&gt;</span>
-<span class="lineno"> 9</span>  <span class="nt">&lt;class&gt;</span>model.data.Comic<span class="nt">&lt;/class&gt;</span>
-<span class="lineno">10</span>  <span class="nt">&lt;properties&gt;</span>
-<span class="lineno">11</span>  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;javax.persistence.jdbc.driver&quot;</span> <span class="na">value=</span><span class="s">&quot;org.sqlite.JDBC&quot;</span> <span class="nt">/&gt;</span>
-<span class="lineno">12</span>  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;javax.persistence.jdbc.url&quot;</span> <span class="na">value=</span><span class="s">&quot;jdbc:sqlite:xkcdreader.db&quot;</span> <span class="nt">/&gt;</span>
-<span class="lineno">13</span>  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;eclipselink.logging.level&quot;</span> <span class="na">value=</span><span class="s">&quot;WARNING&quot;</span> <span class="nt">/&gt;</span>
-<span class="lineno">14</span>  <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;eclipselink.ddl-generation&quot;</span> <span class="na">value=</span><span class="s">&quot;create-tables&quot;</span> <span class="nt">/&gt;</span>
-<span class="lineno">15</span>  <span class="nt">&lt;/properties&gt;</span>
-<span class="lineno">16</span>  <span class="nt">&lt;/persistence-unit&gt;</span>
-<span class="lineno">17</span> <span class="nt">&lt;/persistence&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre></td><td class="code"><pre><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;persistence</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/persistence"</span>
+ <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+ <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/persistence</span>
+ <span class="err">http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"</span>
+ <span class="na">version=</span><span class="s">"2.0"</span><span class="nt">&gt;</span>
+
+ <span class="nt">&lt;persistence-unit</span> <span class="na">name=</span><span class="s">"Comics"</span> <span class="na">transaction-type=</span><span class="s">"RESOURCE_LOCAL"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;class&gt;</span>model.data.Comic<span class="nt">&lt;/class&gt;</span>
+ <span class="nt">&lt;properties&gt;</span>
+ <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"javax.persistence.jdbc.driver"</span> <span class="na">value=</span><span class="s">"org.sqlite.JDBC"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"javax.persistence.jdbc.url"</span> <span class="na">value=</span><span class="s">"jdbc:sqlite:xkcdreader.db"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"eclipselink.logging.level"</span> <span class="na">value=</span><span class="s">"WARNING"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"eclipselink.ddl-generation"</span> <span class="na">value=</span><span class="s">"create-tables"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;/properties&gt;</span>
+ <span class="nt">&lt;/persistence-unit&gt;</span>
+<span class="nt">&lt;/persistence&gt;</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The driver is just the jdbc-driver, the url is the connection string used by <a href="http://java.sun.com/javase/6/docs/api/java/sql/DriverManager.html#getConnection%28java.lang.String%29" target="_blank">DriverManager.getConnection()</a>, logging and ddl-generation is specific to eclipselink, logging level is pretty self explaning, ddl-generation makes it possible to generate tables automatically. Some of the properties that I did not specify (for JPA) is user and password.</p>
 <p>Some mandatory links:</p>

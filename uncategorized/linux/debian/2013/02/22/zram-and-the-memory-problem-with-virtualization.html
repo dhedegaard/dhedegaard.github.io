@@ -77,15 +77,15 @@
 <h2>Initializing the SWAP on boot</h2>
 <p>Since the content of DRAM (Dynamic RAM) is lost when the module are unpowered you need to make new swap every time you boot. There are lots of nice init-scripts out there to do this for you. I like to do it myself, my solution (albeit primitive) is to put the details in <strong>/etc/rc.local</strong>. First I tell the zram-devices how many bytes I want in each, then I make the swap and then i mount the swap. Details below:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># zram swap</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># zram swap</span>
 <span class="c"># expects zram modprobed with zram_num_devices=2</span>
 <span class="c"># allocates 4gb mem to zram, in 2 separate swap partitions.</span>
-<span class="nb">echo </span><span class="m">2147483648</span> &gt; /sys/block/zram0/disksize
-<span class="nb">echo </span><span class="m">2147483648</span> &gt; /sys/block/zram1/disksize
+<span class="nb">echo </span>2147483648 &gt; /sys/block/zram0/disksize
+<span class="nb">echo </span>2147483648 &gt; /sys/block/zram1/disksize
 mkswap /dev/zram0
 mkswap /dev/zram1
-swapon -p <span class="m">100</span> /dev/zram0
-swapon -p <span class="m">100</span> /dev/zram1</code></pre></div>
+swapon -p 100 /dev/zram0
+swapon -p 100 /dev/zram1</code></pre></figure>
 
 <p>The reason for using 4gb of my memory as zram is because my machine has a total of 8 gb of memory. Some scripts use 100% of the memory as zram.</p>
 <h2>Some statistics</h2>

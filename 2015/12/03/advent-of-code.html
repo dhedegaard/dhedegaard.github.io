@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index,follow" />
   <meta name="keywords" content="Dennis Hedegaard,Dennis,neo2k,dhedegaard,dennishedegaard,blog" />
-  <title>The floating point type.</title>
-  <meta name="description" content="In C and many other languages the float and double types exists, they're the primary means for decimal types, however they can sometimes vary quiet a bit. Fo...">
+  <title>Advent of Code</title>
+  <meta name="description" content="A few days ago I stumbled upon Advent of Code onHacker News. The basic idea isthat the author release a new puzzle every day until christmas, the morepuzzles...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="canonical" href="https://dhedegaard.dk/languages/2010/05/03/the-floating-point-type.html">
+  <link rel="canonical" href="https://dhedegaard.dk/2015/12/03/advent-of-code.html">
   <link rel="alternate" type="application/rss+xml" title="Dennis Hedegaard" href="https://dhedegaard.dk/feed.xml" />
 </head>
 
@@ -59,55 +59,45 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">The floating point type.</h1>
-    <p class="post-meta">May 3, 2010 • Dennis Hedegaard</p>
+    <h1 class="post-title">Advent of Code</h1>
+    <p class="post-meta">Dec 3, 2015 • Dennis Hedegaard</p>
   </header>
 
   <article class="post-content">
-    <p>In C and many other languages the <strong>float</strong> and <strong>double</strong> types exists, they're the primary means for decimal types, however they can sometimes vary quiet a bit. For instance if you try to divide 1 by 3, you often get a result of: 0.33333333333333331.</p>
-<p>The reason for this result is of course the floats lack of precision, a float is normally implemented in 32-bits, just like a 32-bit integer, it has it boundaries.</p>
-<p>To show how bad these limits can be, I wrote some sample code in C, to check if an unsigned long as a float is equal to the same number + 1.</p>
+    <p>A few days ago I stumbled upon <a href="http://adventofcode.com/">Advent of Code</a> on
+<a href="https://news.ycombinator.com/item?id=10654970">Hacker News</a>. The basic idea is
+that the author release a new puzzle every day until christmas, the more
+puzzles you solve the prettier the ASCII christmas tree on the frontpage
+becomes.</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17</pre></td><td class="code"><pre><span class="cp">#include &lt;stdio.h&gt;;
-#include &lt;limits.h&gt;;
-</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"A list of bad floats from 0 to %lu:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">ULONG_MAX</span><span class="p">);</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ULONG_MAX</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(((</span><span class="kt">float</span><span class="p">)</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// 33[E is move cursor to beginning of line.
-</span>      <span class="c1">// 33[K is clear line from cursor and to end of line.
-</span>      <span class="n">printf</span><span class="p">(</span><span class="s">"33[E33[K%12ld: (float) %15ld + 1 == (float) %15ld</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">++</span><span class="n">count</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-      <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"We counted %ld bad floats.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>In my spare time I’m currently reading
+<a href="http://www.gopl.io/">The Go Programming Language</a> book. Advent of Code seems
+like the perfect time to get some hands on experience with Go.</p>
 
-<p>The result is pretty scary, however it's rather easy to explain how this happens. Like the signed integer, a float has a signed bit at highest bit, after that comes an exponent of 8 bits, the exponent is of course binary exponentially. Last is the mantissa (or fraction), it fits the last 23 bits of the 32 bits.</p>
-<p>Now it's funny to see that some number actually derive more than +/- 1, for instance 1/3. Now this is not entirely game breaking for most calculations, but if you take some inaccuracy through many calculations, the loss of precision will accumulate more and more.</p>
-<p>Now, it might be unclear of how we would express decimals, however the exponent is a signed byte, so it goes from -128 to 127, if the have a negative exponent, we get a mantissa * some number between 0 and 1.</p>
-<p>Now for the double, it's more precise, since it's 64-bits and not 32 like the float. This means we still have 1 bit for the signed bit. For the exponent we now have 11 bits and for the mantissa we have 52. This means the lack of precision is smaller, and that this lack accumulates slower.</p>
-<p>There's of course no way to express all values accurately, as that would required unlimited memory.</p>
+<p>As I’m writing this on the 3rd of December there’s currently only 3 puzzles
+released, however they seem to ramp up so I’m sure it’s get real interesting
+later on :)</p>
+
+<p>An interesting point about the project is that everybody gets different input
+for the assignment, therefore the answers cannot be carbon copied between users.
+The algorithm solutions are however the same.</p>
+
+<p>I’ve grown accustomed to dynamic languages and being able to do a lot in very
+few lines, Go feels more like C but without the hassle of memory management and
+without having to implement standard data structures myself.</p>
+
+<p>My code is currently on <a href="https://github.com/dhedegaard/adventofcode">Github</a>,
+the travis build currently only tests that the code compiles and runs, does
+assert or check anything.</p>
+
+<p>Future exploration into go in terms of this project is:</p>
+
+<ul>
+  <li>Unit testing the algorithms according to the various examples in the puzzles.</li>
+  <li>Running the unit tests using travis.</li>
+  <li>How to do code coverage ?</li>
+  <li>Go routines and channels for optimizing the various solutions.</li>
+</ul>
 
   </article>
 

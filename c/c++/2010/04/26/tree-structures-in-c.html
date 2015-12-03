@@ -85,14 +85,14 @@
 <p>So for instance if we take 35, which is in the 4. line, it has 17 as left parent, 47 as right parent, 4 as left child and 82 as right child.</p>
 <p>The struct I use for this is pretty basic:</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
   <span class="kt">int</span> <span class="n">sum</span><span class="p">;</span>
   <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">parentleft</span><span class="p">;</span>
   <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">parentright</span><span class="p">;</span>
   <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">left</span><span class="p">;</span>
   <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
-<span class="p">};</span></code></pre></div>
+<span class="p">};</span></code></pre></figure>
 
 <p>The sum is used to keep intermediate calculations, the value is the number the node repressents, the rest is pretty self self explainatory.</p>
 <p>The parsing is done using a pointer for the current node, and a pointer to the top. There are 3 cases, which are all explained here:</p>
@@ -104,25 +104,25 @@
 <p>Now for the recursive iteration through the tree:</p>
 <p>The recursion is pretty basic, it simply calculates the sum of the child node to the left and right, returning the maximum of these upwards, the sum variable here stores the result, so if we encounter the same node again (which we will in big trees), we don't have to calculate the sum again. This gives an extreme speed increase, since all sums only have to be calculated once:</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">recursivesum</span><span class="p">(</span><span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">recursivesum</span><span class="p">(</span><span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">sum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sum</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
       <span class="n">left</span> <span class="o">=</span> <span class="n">recursivesum</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
       <span class="n">right</span> <span class="o">=</span> <span class="n">recursivesum</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-    <span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span> <span class="o">?</span> <span class="nl">left</span> <span class="p">:</span> <span class="n">right</span><span class="p">)</span> <span class="o">+</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span> <span class="o">?</span> <span class="n">left</span> <span class="o">:</span> <span class="n">right</span><span class="p">)</span> <span class="o">+</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
     <span class="n">node</span><span class="o">-&gt;</span><span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="k">else</span>
     <span class="k">return</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Now there's an apparent problem here, if the sum of a deep subtree is 0, it'll get recalculated without the sum.</p>
 <p>Now then, since I use malloc for the tree, it means everything in the tree is allocated on the heap. For this I made a function that frees a tree (or subtree), it's pretty basic since it just checks if both children are NULL, if not we call recursively, then we make sure that the parents (if any) aren't pointing to this node anymore. Then we free the current node and return.</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">freetree</span><span class="p">(</span><span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">freetree</span><span class="p">(</span><span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
     <span class="n">freetree</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
@@ -132,7 +132,7 @@
   <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">parentright</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
     <span class="n">node</span><span class="o">-&gt;</span><span class="n">parentright</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
   <span class="n">free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Now this is how I chose to solve a problem found at <a href="http://projecteuler.net/" target="_blank">project euler</a>, which is why I don't link the code in it's full version.</p>
 

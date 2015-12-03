@@ -6,9 +6,53 @@
 </description>
     <link>https://dhedegaard.dk/</link>
     <atom:link href="https://dhedegaard.dk/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 27 Aug 2015 15:34:41 +0000</pubDate>
-    <lastBuildDate>Thu, 27 Aug 2015 15:34:41 +0000</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <pubDate>Thu, 03 Dec 2015 21:45:46 +0100</pubDate>
+    <lastBuildDate>Thu, 03 Dec 2015 21:45:46 +0100</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Advent of Code</title>
+        <description>&lt;p&gt;A few days ago I stumbled upon &lt;a href=&quot;http://adventofcode.com/&quot;&gt;Advent of Code&lt;/a&gt; on
+&lt;a href=&quot;https://news.ycombinator.com/item?id=10654970&quot;&gt;Hacker News&lt;/a&gt;. The basic idea is
+that the author release a new puzzle every day until christmas, the more
+puzzles you solve the prettier the ASCII christmas tree on the frontpage
+becomes.&lt;/p&gt;
+
+&lt;p&gt;In my spare time I’m currently reading
+&lt;a href=&quot;http://www.gopl.io/&quot;&gt;The Go Programming Language&lt;/a&gt; book. Advent of Code seems
+like the perfect time to get some hands on experience with Go.&lt;/p&gt;
+
+&lt;p&gt;As I’m writing this on the 3rd of December there’s currently only 3 puzzles
+released, however they seem to ramp up so I’m sure it’s get real interesting
+later on :)&lt;/p&gt;
+
+&lt;p&gt;An interesting point about the project is that everybody gets different input
+for the assignment, therefore the answers cannot be carbon copied between users.
+The algorithm solutions are however the same.&lt;/p&gt;
+
+&lt;p&gt;I’ve grown accustomed to dynamic languages and being able to do a lot in very
+few lines, Go feels more like C but without the hassle of memory management and
+without having to implement standard data structures myself.&lt;/p&gt;
+
+&lt;p&gt;My code is currently on &lt;a href=&quot;https://github.com/dhedegaard/adventofcode&quot;&gt;Github&lt;/a&gt;,
+the travis build currently only tests that the code compiles and runs, does
+assert or check anything.&lt;/p&gt;
+
+&lt;p&gt;Future exploration into go in terms of this project is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Unit testing the algorithms according to the various examples in the puzzles.&lt;/li&gt;
+  &lt;li&gt;Running the unit tests using travis.&lt;/li&gt;
+  &lt;li&gt;How to do code coverage ?&lt;/li&gt;
+  &lt;li&gt;Go routines and channels for optimizing the various solutions.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 03 Dec 2015 00:00:00 +0100</pubDate>
+        <link>https://dhedegaard.dk/2015/12/03/advent-of-code.html</link>
+        <guid isPermaLink="true">https://dhedegaard.dk/2015/12/03/advent-of-code.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>The awesomeness of Docker</title>
@@ -54,7 +98,7 @@
 
 &lt;p&gt;For instance, this blog entry was made by using the &lt;a href=&quot;https://hub.docker.com/r/jekyll/jekyll/&quot;&gt;jekyll/jekyll&lt;/a&gt; docker image.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 18 Aug 2015 00:00:00 +0200</pubDate>
         <link>https://dhedegaard.dk/2015/08/18/the_awesomeness_of_docker.html</link>
         <guid isPermaLink="true">https://dhedegaard.dk/2015/08/18/the_awesomeness_of_docker.html</guid>
         
@@ -92,9 +136,9 @@
         <category>programming</category>
         
         
-        <category>languages</category>
+        <category>Languages</category>
         
-        <category>go</category>
+        <category>Go</category>
         
       </item>
     
@@ -118,20 +162,20 @@
 &lt;p&gt;Most of the above is convenience, to reduce the number of lines required, it makes the code easier to read and reduces the chance of bugs.&lt;/p&gt;
 &lt;p&gt;In django you define the caching used in the settings module using something similar to (example is local memcached, over TCP):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;CACHES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;s&quot;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;s&quot;&gt;&amp;#39;BACKEND&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;django.core.cache.backends.memcached.MemcachedCache&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;s&quot;&gt;&amp;#39;LOCATION&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;127.0.0.1:11211&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;CACHES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&#39;default&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&#39;BACKEND&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;django.core.cache.backends.memcached.MemcachedCache&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&#39;LOCATION&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;127.0.0.1:11211&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;span style=&quot;line-height: 1.714285714; font-size: 1rem;&quot;&gt;The backend can be switched to something else that implements the django cache interface, without much notice. You can also use multiple caching backends simultaneous.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;The django caching framework is extremely easy to use, here&#39;s my take on it (from app/eztv.py):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.core.cache&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.core.cache&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Key of the cache.&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;eztv_cache&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;eztv_cache&#39;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Timeout of the cache (in seconds)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_TIMEOUT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
@@ -139,7 +183,7 @@
     &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yield_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 
-    &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_TIMEOUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_NAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CACHE_ENTRY_TIMEOUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
@@ -150,7 +194,7 @@
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cache&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;As can be seen, the django cache framework is a simple import (after defining the backend in settings) and works along the lines of a key/value store, where the elements  can have a timeout.&lt;/p&gt;
 &lt;p&gt;The backend can even be memory-only (normally only for development) or simply use files (as keys) on the filesystem.&lt;/p&gt;
@@ -176,7 +220,7 @@ A running site can be found here: &lt;a href=&quot;http://ez.dhedegaard.dk/&quo
         <category>cache</category>
         
         
-        <category>python</category>
+        <category>Python</category>
         
       </item>
     
@@ -208,7 +252,7 @@ A running site can be found here: &lt;a href=&quot;http://ez.dhedegaard.dk/&quo
         <category>lxde</category>
         
         
-        <category>linux</category>
+        <category>Linux</category>
         
       </item>
     
@@ -227,15 +271,15 @@ A running site can be found here: &lt;a href=&quot;http://ez.dhedegaard.dk/&quo
 &lt;h2&gt;Initializing the SWAP on boot&lt;/h2&gt;
 &lt;p&gt;Since the content of DRAM (Dynamic RAM) is lost when the module are unpowered you need to make new swap every time you boot. There are lots of nice init-scripts out there to do this for you. I like to do it myself, my solution (albeit primitive) is to put the details in &lt;strong&gt;/etc/rc.local&lt;/strong&gt;. First I tell the zram-devices how many bytes I want in each, then I make the swap and then i mount the swap. Details below:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# zram swap&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# zram swap&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# expects zram modprobed with zram_num_devices=2&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# allocates 4gb mem to zram, in 2 separate swap partitions.&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2147483648&lt;/span&gt; &amp;gt; /sys/block/zram0/disksize
-&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2147483648&lt;/span&gt; &amp;gt; /sys/block/zram1/disksize
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;2147483648 &amp;gt; /sys/block/zram0/disksize
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;2147483648 &amp;gt; /sys/block/zram1/disksize
 mkswap /dev/zram0
 mkswap /dev/zram1
-swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram0
-swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+swapon -p 100 /dev/zram0
+swapon -p 100 /dev/zram1&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The reason for using 4gb of my memory as zram is because my machine has a total of 8 gb of memory. Some scripts use 100% of the memory as zram.&lt;/p&gt;
 &lt;h2&gt;Some statistics&lt;/h2&gt;
@@ -262,11 +306,11 @@ swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram1&lt;/code&g
         <category>zram_num_devices</category>
         
         
-        <category>uncategorized</category>
+        <category>Uncategorized</category>
         
-        <category>linux</category>
+        <category>Linux</category>
         
-        <category>debian</category>
+        <category>Debian</category>
         
       </item>
     
@@ -294,7 +338,7 @@ swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram1&lt;/code&g
         <category>gae</category>
         
         
-        <category>python</category>
+        <category>Python</category>
         
       </item>
     
@@ -333,9 +377,9 @@ swapon -p &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; /dev/zram1&lt;/code&g
         <category>webchat</category>
         
         
-        <category>python</category>
+        <category>Python</category>
         
-        <category>javascript</category>
+        <category>Javascript</category>
         
       </item>
     
@@ -381,7 +425,7 @@ GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet console=tty0 console=ttyS0,9600n8&quot;&l
         <category>getty</category>
         
         
-        <category>centos</category>
+        <category>CentOS</category>
         
       </item>
     
@@ -412,46 +456,7 @@ GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet console=tty0 console=ttyS0,9600n8&quot;&l
         <category>postgres</category>
         
         
-        <category>python</category>
-        
-      </item>
-    
-      <item>
-        <title>Game of Life</title>
-        <description>&lt;p&gt;I&#39;ve spent the day implementing &lt;a title=&quot;Wikipedia - Game of Life&quot; href=&quot;http://en.wikipedia.org/wiki/Conway&#39;s_Game_of_Life&quot; target=&quot;_blank&quot;&gt;Conway&#39;s Game of Life&lt;/a&gt; in javascript and HTML5 using the Canvas element.&lt;/p&gt;
-&lt;p&gt;Check it out &lt;a title=&quot;Game of Life&quot; href=&quot;http://p.dhedegaard.dk/gameoflife&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;It&#39;s been tested on the following browsers:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Google Chrome&lt;/li&gt;
-&lt;li&gt;Firefox&lt;/li&gt;
-&lt;li&gt;Internet Explorer 9&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I&#39;ve implemented different interesting patterns as well as a &quot;random&quot; feature. Suggestions and bugfixes are welcome.&lt;/p&gt;
-&lt;p&gt;Feel free to browse the source: &lt;a href=&quot;https://bitbucket.org/dennishedegaard/gameoflife.js&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/dennishedegaard/gameoflife.js&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;You can try it out here: &lt;a href=&quot;http://p.dhedegaard.dk/gameoflife&quot; target=&quot;_blank&quot;&gt;http://p.dhedegaard.dk/gameoflife&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 29 Sep 2012 17:46:26 +0200</pubDate>
-        <link>https://dhedegaard.dk/languages/javascript/2012/09/29/game-of-life.html</link>
-        <guid isPermaLink="true">https://dhedegaard.dk/languages/javascript/2012/09/29/game-of-life.html</guid>
-        
-        <category>javascript</category>
-        
-        <category>html5</category>
-        
-        <category>game of life</category>
-        
-        <category>conway</category>
-        
-        <category>glider</category>
-        
-        <category>canvas</category>
-        
-        <category>simulation.</category>
-        
-        
-        <category>languages</category>
-        
-        <category>javascript</category>
+        <category>Python</category>
         
       </item>
     

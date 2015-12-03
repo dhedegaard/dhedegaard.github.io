@@ -82,20 +82,20 @@
 <p>Most of the above is convenience, to reduce the number of lines required, it makes the code easier to read and reduces the chance of bugs.</p>
 <p>In django you define the caching used in the settings module using something similar to (example is local memcached, over TCP):</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">CACHES</span> <span class="o">=</span> <span class="p">{</span>
- <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
- <span class="s">&#39;BACKEND&#39;</span><span class="p">:</span> <span class="s">&#39;django.core.cache.backends.memcached.MemcachedCache&#39;</span><span class="p">,</span>
- <span class="s">&#39;LOCATION&#39;</span><span class="p">:</span> <span class="s">&#39;127.0.0.1:11211&#39;</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">CACHES</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
+ <span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.core.cache.backends.memcached.MemcachedCache'</span><span class="p">,</span>
+ <span class="s">'LOCATION'</span><span class="p">:</span> <span class="s">'127.0.0.1:11211'</span><span class="p">,</span>
  <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p><span style="line-height: 1.714285714; font-size: 1rem;">The backend can be switched to something else that implements the django cache interface, without much notice. You can also use multiple caching backends simultaneous.</span></p>
 <p>The django caching framework is extremely easy to use, here's my take on it (from app/eztv.py):</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span>
 <span class="o">...</span>
 <span class="c"># Key of the cache.</span>
-<span class="n">CACHE_ENTRY_NAME</span> <span class="o">=</span> <span class="s">&#39;eztv_cache&#39;</span>
+<span class="n">CACHE_ENTRY_NAME</span> <span class="o">=</span> <span class="s">'eztv_cache'</span>
 <span class="c"># Timeout of the cache (in seconds)</span>
 <span class="n">CACHE_ENTRY_TIMEOUT</span> <span class="o">=</span> <span class="mi">600</span>
 <span class="o">...</span>
@@ -103,7 +103,7 @@
     <span class="o">...</span>
     <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">yield_data</span><span class="p">())</span>
 
-    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">CACHE_ENTRY_NAME</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">CACHE_ENTRY_TIMEOUT</span><span class="p">)</span>
+    <span class="n">cache</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">CACHE_ENTRY_NAME</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">CACHE_ENTRY_TIMEOUT</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">def</span> <span class="nf">get_cache</span><span class="p">():</span>
@@ -114,7 +114,7 @@
     <span class="k">if</span> <span class="n">_cache</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">_cache</span> <span class="o">=</span> <span class="n">update_cache</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="n">_cache</span></code></pre></div>
+    <span class="k">return</span> <span class="n">_cache</span></code></pre></figure>
 
 <p>As can be seen, the django cache framework is a simple import (after defining the backend in settings) and works along the lines of a key/value store, where the elements  can have a timeout.</p>
 <p>The backend can even be memory-only (normally only for development) or simply use files (as keys) on the filesystem.</p>

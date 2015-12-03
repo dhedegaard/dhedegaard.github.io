@@ -67,32 +67,58 @@
     <p>This is my first real code written in perl, and I must say it's rather satisfying, it's a simple fibonacci calculator using a hashtable (hash value).</p>
 <p>So, here's the code:</p>
 
-<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="lineno"> 1</span> <span class="c1">#!/usr/bin/perl</span>
-<span class="lineno"> 2</span> <span class="nv">%table</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-<span class="lineno"> 3</span> <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">;</span><span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno"> 4</span>   <span class="k">print</span> <span class="s">&quot;fibo for &quot;</span><span class="o">.</span><span class="nv">$i</span><span class="o">.</span><span class="s">&quot;: &quot;</span><span class="o">.</span><span class="n">fibo</span><span class="p">(</span><span class="nv">$i</span><span class="p">)</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
-<span class="lineno"> 5</span> <span class="p">}</span>
-<span class="lineno"> 6</span> 
-<span class="lineno"> 7</span> <span class="k">sub </span><span class="nf">fibo</span><span class="p">{</span>
-<span class="lineno"> 8</span>   <span class="k">my</span><span class="p">(</span><span class="nv">$f</span><span class="p">)</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<span class="lineno"> 9</span>   <span class="k">if</span> <span class="p">(</span><span class="nv">$f</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno">10</span>     <span class="k">print</span> <span class="s">&quot;Input is less than 0: &quot;</span><span class="o">.</span><span class="nv">$f</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
-<span class="lineno">11</span>     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="lineno">12</span>   <span class="p">}</span>
-<span class="lineno">13</span>   <span class="k">if</span> <span class="p">(</span><span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">})</span> <span class="p">{</span>
-<span class="lineno">14</span>     <span class="k">return</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">};</span>
-<span class="lineno">15</span>   <span class="p">}</span>
-<span class="lineno">16</span>   <span class="k">else</span> <span class="p">{</span>
-<span class="lineno">17</span>     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
-<span class="lineno">18</span>       <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">}</span> <span class="o">=</span> <span class="n">fibo</span><span class="p">(</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
-<span class="lineno">19</span>     <span class="p">}</span>
-<span class="lineno">20</span>     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
-<span class="lineno">21</span>       <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span> <span class="o">=</span> <span class="n">fibo</span><span class="p">(</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<span class="lineno">22</span>     <span class="p">}</span>
-<span class="lineno">23</span>     <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">}</span> <span class="o">+</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">};</span>
-<span class="lineno">24</span>     <span class="k">return</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">};</span>
-<span class="lineno">25</span>   <span class="p">}</span>
-<span class="lineno">26</span> <span class="p">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-perl" data-lang="perl"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/perl</span>
+<span class="nv">%table</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">;</span><span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">print</span> <span class="s">"fibo for "</span><span class="o">.</span><span class="nv">$i</span><span class="o">.</span><span class="s">": "</span><span class="o">.</span><span class="nv">fibo</span><span class="p">(</span><span class="nv">$i</span><span class="p">)</span><span class="o">.</span><span class="s">"\n"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">sub </span><span class="nf">fibo</span><span class="p">{</span>
+  <span class="k">my</span><span class="p">(</span><span class="nv">$f</span><span class="p">)</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$f</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s">"Input is less than 0: "</span><span class="o">.</span><span class="nv">$f</span><span class="o">.</span><span class="s">"\n"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">})</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">};</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+      <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">}</span> <span class="o">=</span> <span class="nv">fibo</span><span class="p">(</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">exists</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+      <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span> <span class="o">=</span> <span class="nv">fibo</span><span class="p">(</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">2</span><span class="p">}</span> <span class="o">+</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span> <span class="o">-</span> <span class="mi">1</span><span class="p">};</span>
+    <span class="k">return</span> <span class="nv">$table</span><span class="p">{</span><span class="nv">$f</span><span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>What's interesting is the use of my($var) for reassigning parameters to the function to internal variables. Moreover the if and else statements demands {} after the condition, which I mostly like as optional. Besides that it looks like a neat language for writing scripts and regex statements.</p>
 <p>One thing I'm lacking at the moment (should be obvious) is a way of concatenating things into a string, to avoid mass printing everything in a separate function call.</p>
