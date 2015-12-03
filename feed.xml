@@ -6,8 +6,8 @@
 </description>
     <link>https://dhedegaard.dk/</link>
     <atom:link href="https://dhedegaard.dk/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 03 Dec 2015 21:45:46 +0100</pubDate>
-    <lastBuildDate>Thu, 03 Dec 2015 21:45:46 +0100</lastBuildDate>
+    <pubDate>Thu, 03 Dec 2015 21:52:11 +0100</pubDate>
+    <lastBuildDate>Thu, 03 Dec 2015 21:52:11 +0100</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -19,32 +19,32 @@ puzzles you solve the prettier the ASCII christmas tree on the frontpage
 becomes.&lt;/p&gt;
 
 &lt;p&gt;In my spare time I’m currently reading
-&lt;a href=&quot;http://www.gopl.io/&quot;&gt;The Go Programming Language&lt;/a&gt; book. Advent of Code seems
+&lt;a href=&quot;http://www.gopl.io/&quot;&gt;The Go Programming Language&lt;/a&gt; book, Advent of Code seems
 like the perfect time to get some hands on experience with Go.&lt;/p&gt;
 
 &lt;p&gt;As I’m writing this on the 3rd of December there’s currently only 3 puzzles
-released, however they seem to ramp up so I’m sure it’s get real interesting
+released, however they seem to ramp up so I’m sure it’ll get real interesting
 later on :)&lt;/p&gt;
 
 &lt;p&gt;An interesting point about the project is that everybody gets different input
 for the assignment, therefore the answers cannot be carbon copied between users.
-The algorithm solutions are however the same.&lt;/p&gt;
+The algorithm solutions can however be shared.&lt;/p&gt;
 
 &lt;p&gt;I’ve grown accustomed to dynamic languages and being able to do a lot in very
 few lines, Go feels more like C but without the hassle of memory management and
 without having to implement standard data structures myself.&lt;/p&gt;
 
 &lt;p&gt;My code is currently on &lt;a href=&quot;https://github.com/dhedegaard/adventofcode&quot;&gt;Github&lt;/a&gt;,
-the travis build currently only tests that the code compiles and runs, does
-assert or check anything.&lt;/p&gt;
+the travis build currently only tests that the code compiles and runs, no
+asserts or checks.&lt;/p&gt;
 
-&lt;p&gt;Future exploration into go in terms of this project is:&lt;/p&gt;
+&lt;p&gt;Future exploration into Go in terms of this project is:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Unit testing the algorithms according to the various examples in the puzzles.&lt;/li&gt;
   &lt;li&gt;Running the unit tests using travis.&lt;/li&gt;
   &lt;li&gt;How to do code coverage ?&lt;/li&gt;
-  &lt;li&gt;Go routines and channels for optimizing the various solutions.&lt;/li&gt;
+  &lt;li&gt;Go routines and channels for optimizing and simplifying the various solutions.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 03 Dec 2015 00:00:00 +0100</pubDate>
