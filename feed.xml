@@ -6,21 +6,21 @@
 </description>
     <link>https://dhedegaard.dk/</link>
     <atom:link href="https://dhedegaard.dk/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 03 Dec 2015 21:52:11 +0100</pubDate>
-    <lastBuildDate>Thu, 03 Dec 2015 21:52:11 +0100</lastBuildDate>
+    <pubDate>Fri, 04 Dec 2015 17:09:02 +0100</pubDate>
+    <lastBuildDate>Fri, 04 Dec 2015 17:09:02 +0100</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
         <title>Advent of Code</title>
         <description>&lt;p&gt;A few days ago I stumbled upon &lt;a href=&quot;http://adventofcode.com/&quot;&gt;Advent of Code&lt;/a&gt; on
-&lt;a href=&quot;https://news.ycombinator.com/item?id=10654970&quot;&gt;Hacker News&lt;/a&gt;. The basic idea is
-that the author release a new puzzle every day until christmas, the more
-puzzles you solve the prettier the ASCII christmas tree on the frontpage
-becomes.&lt;/p&gt;
+&lt;a href=&quot;https://news.ycombinator.com/item?id=10654970&quot;&gt;Hacker News&lt;/a&gt;. A new puzzle is
+released every day until christmas, the more puzzles you solve the prettier the
+ASCII christmas tree on the front page becomes.&lt;/p&gt;
 
-&lt;p&gt;In my spare time I’m currently reading
-&lt;a href=&quot;http://www.gopl.io/&quot;&gt;The Go Programming Language&lt;/a&gt; book, Advent of Code seems
-like the perfect time to get some hands on experience with Go.&lt;/p&gt;
+&lt;p&gt;I’m currently reading
+&lt;a href=&quot;http://www.gopl.io/&quot;&gt;The Go Programming Language&lt;/a&gt; in my spare time,
+Advent of Code seems like a great opportunity to get some hands on experience
+with Go.&lt;/p&gt;
 
 &lt;p&gt;As I’m writing this on the 3rd of December there’s currently only 3 puzzles
 released, however they seem to ramp up so I’m sure it’ll get real interesting
